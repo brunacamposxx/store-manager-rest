@@ -1,4 +1,4 @@
-const getAllSales = ( req, res) => {
+const getAllSales = (req, res) => {
   res.status(200).json({ message: 'Estou na rota getAllSales' });
 };
 
