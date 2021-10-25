@@ -1,13 +1,9 @@
-const { ObjectId } = require('mongodb');
+// const { ObjectId } = require('mongodb');
 const productsModels = require('../models/productModel');
 const { errName,
   errAlreadyExists,
   errQuantity,
   errNotANumber,
-  STATUS_CODE_OK,
-  STATUS_CODE_CREATED,
-  STATUS_CODE_UNPROCESSABLE_ENTITY,
-  STATUS_CODE_NOT_FOUND
 } = require('../helper/index');
 
 const getProducts = async () => {
@@ -16,36 +12,28 @@ const getProducts = async () => {
 };
 
 const create = async (product) => {
+  const { name, quantity } = product;
 
-  const duplicateName = await productsModels.duplicateName({ name });
-  if (duplicateName) return { errorCode: 'DUPLICATE_NAME' };
-  return productsModels.create({ name, quantity });
+  if (name.length < 5) return errName;
+  if (typeof quantity !== 'number') return errNotANumber;
+  if (quantity <= 0) return errQuantity;
+
+  const duplicateName = await productsModels.getAll(name);
+  const findName = duplicateName.find((productName) => productName.name === name);
+  if (findName) return errAlreadyExists;
+  return productsModels.create(product);
 };
 
 // verifica se o nome é duplicado
 // const duplicateName = async ({ name }) => {
 // };
 
-const validName = async ({ name }) => {
-  const product = await productsModels.getAll();
-  const findName = product.find((product) => product.name === name);
-
-  if (findName) {
-    return {
-      status: 422,
-      err: { code: 'invalid_data', message: 'Product already exists' },
-    };
-  }
-
-  if (name.length < 5) {
-    return { status: 422,
-      err: { code: 'invalid_data', message: '"name" length must be at least 5 characters long'},
-    };
-  }
-};
+// const validName = async ({ name }) => {
+//   const product = await productsModels.getAll();
+//   const findName = product.find((product) => product.name === name);
+// };
 
 module.exports = {
   getProducts,
   create,
-  validName,
 };

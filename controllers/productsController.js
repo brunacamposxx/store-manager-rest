@@ -1,4 +1,6 @@
 const productsServices = require('../services/productsServices');
+const { STATUS_CODE_UNPROCESSABLE_ENTITY,
+  STATUS_CODE_CREATED } = require('../helper/index');
 
 const getAllProducts = async (req, res) => {
   try {
@@ -22,18 +24,19 @@ const getByIdProduct = async (req, res) => {
 };
 
 const createProduct = async (req, res) => {
-  try {
-    const { name, quantity } = req.body;
-    await productsServices.create({ name, quantity });
-    // if (data.errorCode && data.errorCode === 'DUPLICATE_NAME') {
-      return res.status(validName.status).json({ message: 'Esse nome já está cadastrado' });
+  // try {
+    // const { name, quantity } = req.body;
+    const product = req.body;
+    const products = await productsServices.create(product);
+    if (products.err) {
+      return res.status(STATUS_CODE_UNPROCESSABLE_ENTITY).json(products);
     }
-
-    return res.status(201).json(data);
-  } catch (error) {
-    console.error(error);
-      return res.status(500).json({ message: 'Aconteceu erro ao cadastrar os dados' });
-  }
+    return res.status(STATUS_CODE_CREATED).json(products);
+  // } 
+  // catch (error) {
+  //   console.error(error);
+  //     return res.status(500).json({ message: 'Aconteceu erro ao cadastrar os dados' });
+  // }
 };
 
 const updateProduct = async (req, res) => {
@@ -52,12 +55,12 @@ const excludeProduct = async (req, res) => {
   try {
   const { id } = req.params;
   await productsServices.exclude({ id });
-  return res.status(200).json({ message: 'registro deletado com sucesso'});
+  return res.status(200).json({ message: 'registro deletado com sucesso' });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Aconteceu erro ao buscar os dados no servidor' });
   }
-}
+};
 
 module.exports = {
   getAllProducts,

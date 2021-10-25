@@ -5,7 +5,7 @@ const STATUS_CODE_NOT_FOUND = 404;
 
 const CODE_ERROR_422 = 'invalid_data';
 
-const MSG_ERROR_NAME_LENGTH = '"name" lenght must be at least 5 characters long';
+const MSG_ERROR_NAME_LENGTH = '"name" length must be at least 5 characters long';
 const MSG_ERROR_ALREADY_EXISTS = 'Product already exists';
 const MSG_ERROR_QUANTITY = '"quantity" must be larger than or equal to 1';
 const MSG_ERROR_NOT_A_NUMBER = '"quantity" must be a number';
