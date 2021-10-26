@@ -9,6 +9,7 @@ const MSG_ERROR_NAME_LENGTH = '"name" length must be at least 5 characters long'
 const MSG_ERROR_ALREADY_EXISTS = 'Product already exists';
 const MSG_ERROR_QUANTITY = '"quantity" must be larger than or equal to 1';
 const MSG_ERROR_NOT_A_NUMBER = '"quantity" must be a number';
+const MSG_ERROR_WRONG_ID_FORMAT = 'Wrong id format';
 
 const errName = {
   err: {
@@ -38,12 +39,12 @@ const errNotANumber = {
   },
 };
 
-// const = {
-//   err: {
-//     code:
-//     message:
-//   },
-// };
+const erroWrongIdFormat = {
+  err: {
+    code: CODE_ERROR_422,
+    message: MSG_ERROR_WRONG_ID_FORMAT, 
+  },
+};
 
 // const = {
 //   err: {
@@ -57,8 +58,10 @@ module.exports = {
   errAlreadyExists,
   errQuantity,
   errNotANumber,
+  erroWrongIdFormat,
   STATUS_CODE_OK,
   STATUS_CODE_CREATED,
   STATUS_CODE_UNPROCESSABLE_ENTITY,
   STATUS_CODE_NOT_FOUND,
+  
 };

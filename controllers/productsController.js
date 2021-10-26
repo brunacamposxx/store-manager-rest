@@ -1,26 +1,25 @@
 const productsServices = require('../services/productsServices');
 const { STATUS_CODE_UNPROCESSABLE_ENTITY,
-  STATUS_CODE_CREATED } = require('../helper/index');
+  STATUS_CODE_CREATED,
+  STATUS_CODE_OK } = require('../helper/index');
 
 const getAllProducts = async (req, res) => {
-  try {
     const products = await productsServices.getProducts();
-    return res.status(200).json(products);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Aconteceu erro ao buscar os dados no servidor' });
-  }
+    return res.status(STATUS_CODE_OK).json(products);
 };
 
 const getByIdProduct = async (req, res) => {
-  try {
+  // try {
     const { id } = req.params;
-    const products = await productsServices.getById(id);
-    return res.status(200).json(products);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Aconteceu erro ao buscar os dados no servidor' });
-  }
+    const products = await productsServices.getId(id);
+    if (products.err) {
+      return res.status(STATUS_CODE_UNPROCESSABLE_ENTITY).json(products);
+    }
+    return res.status(STATUS_CODE_OK).json(products);
+  // } catch (error) {
+  //   console.error(error);
+  //   return res.status(500).json({ message: 'Aconteceu erro ao buscar os dados no servidor' });
+  // }
 };
 
 const createProduct = async (req, res) => {
@@ -40,26 +39,26 @@ const createProduct = async (req, res) => {
 };
 
 const updateProduct = async (req, res) => {
-  try {
+  // try {
     const { id } = req.params;
     const { name, age } = req.body;
     const products = await productsServices.update({ id, name, age });
     return res.status(200).json(products);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Aconteceu erro ao buscar os dados no servidor' });
-  }
+  // } catch (error) {
+  //   console.error(error);
+  //   return res.status(500).json({ message: 'Aconteceu erro ao buscar os dados no servidor' });
+  // }
 };
 
 const excludeProduct = async (req, res) => {
-  try {
+  // try {
   const { id } = req.params;
   await productsServices.exclude({ id });
   return res.status(200).json({ message: 'registro deletado com sucesso' });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Aconteceu erro ao buscar os dados no servidor' });
-  }
+  // } catch (error) {
+  //   console.error(error);
+  //   return res.status(500).json({ message: 'Aconteceu erro ao buscar os dados no servidor' });
+  // }
 };
 
 module.exports = {
