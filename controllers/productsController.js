@@ -38,12 +38,16 @@ const createProduct = async (req, res) => {
   // }
 };
 
-const updateProduct = async (req, res) => {
+const updateOne = async (req, res) => {
   // try {
     const { id } = req.params;
-    const { name, age } = req.body;
-    const products = await productsServices.update({ id, name, age });
-    return res.status(200).json(products);
+    const product = req.body;
+    const { name, quantity } = product;
+    const products = await productsServices.updateProduct({ name, quantity, id });
+    if (products.err) {
+      return res.status(STATUS_CODE_UNPROCESSABLE_ENTITY).json(products);
+    }
+    return res.status(STATUS_CODE_OK).json(products);
   // } catch (error) {
   //   console.error(error);
   //   return res.status(500).json({ message: 'Aconteceu erro ao buscar os dados no servidor' });
@@ -53,8 +57,11 @@ const updateProduct = async (req, res) => {
 const excludeProduct = async (req, res) => {
   // try {
   const { id } = req.params;
-  await productsServices.exclude({ id });
-  return res.status(200).json({ message: 'registro deletado com sucesso' });
+  const products = await productsServices.excludeProduct(id);
+  if (products.err) {
+    return res.status(STATUS_CODE_UNPROCESSABLE_ENTITY).json(products);
+  }
+  return res.status(STATUS_CODE_OK).json(products);
   // } catch (error) {
   //   console.error(error);
   //   return res.status(500).json({ message: 'Aconteceu erro ao buscar os dados no servidor' });
@@ -65,6 +72,6 @@ module.exports = {
   getAllProducts,
   getByIdProduct,
   createProduct,
-  updateProduct,
+  updateOne,
   excludeProduct,
 };

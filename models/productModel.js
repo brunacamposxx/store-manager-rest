@@ -1,5 +1,6 @@
 const { ObjectId } = require('mongodb');
 const connection = require('./connection');
+const { erroWrongIdFormat } = require('../helper/index');
 
 // busca todos os produtos e transforma em array com vários objetos;
 const getAll = async () => {
@@ -34,28 +35,36 @@ const getByName = async (name) => {
   return products;
 };
 
-const update = async ({ id, name, quantity }) => {
+const update = async (product) => {
     // isValid é uma função nativa do mongo
+    const { id, name, quantity } = product;
     if (!ObjectId.isValid(id)) {
-      return null;
+      return erroWrongIdFormat;
     }
   const db = await connection();
   await db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } });
   // return { id, name, quantity };
   const updated = await db.collection('products').findOne({ _id: ObjectId(id) });
+  if (!updated) {
+    return erroWrongIdFormat;
+  }
   return updated;
 };
 
-const exclude = async ({ id }) => {
+const exclude = async (id) => {
     // isValid é uma função nativa do mongo
     if (!ObjectId.isValid(id)) {
-      return null;
+      return erroWrongIdFormat;
     }
+    const excludeId = await getById(id);
+    if (!excludeId) {
+      return erroWrongIdFormat;
+    }
+
     const db = await connection();
-    const excludeId = await getById();
     await db.collection('products').deleteOne({ _id: ObjectId(id) });
-    const excluded = await db.collection('products').findOne({ _id: ObjectId(id) });
-    return { excludeId, excluded };
+    // const excluded = await db.collection('products').findOne({ _id: ObjectId(id) });
+    return excludeId;
 };
 
 module.exports = {

@@ -40,8 +40,33 @@ const getId = async (id) => {
   return products;  
 };
 
+const updateProduct = async (product) => {
+  const { name, quantity } = product;
+
+  // if (!ObjectId.isValid(id)) {
+  //   return erroWrongIdFormat;
+  // }
+  if (name.length < 5) return errName;
+  if (typeof quantity !== 'number') return errNotANumber;
+  if (quantity <= 0) return errQuantity;
+
+  const products = await productsModels.update(product);
+  return products;
+};
+
+const excludeProduct = async (id) => {
+  // if (!ObjectId.isValid(id)) {
+  //   return erroWrongIdFormat;
+  // }
+
+  const excludeId = await productsModels.exclude(id);
+  return excludeId;
+};
+
 module.exports = {
   getProducts,
   create,
   getId,
+  updateProduct,
+  excludeProduct,
 };
