@@ -10,6 +10,7 @@ const MSG_ERROR_ALREADY_EXISTS = 'Product already exists';
 const MSG_ERROR_QUANTITY = '"quantity" must be larger than or equal to 1';
 const MSG_ERROR_NOT_A_NUMBER = '"quantity" must be a number';
 const MSG_ERROR_WRONG_ID_FORMAT = 'Wrong id format';
+const MSG_ERROR_WRONG_ID_OR_QUANTITY = 'Wrong product ID or invalid quantity';
 
 const errName = {
   err: {
@@ -46,12 +47,12 @@ const erroWrongIdFormat = {
   },
 };
 
-// const = {
-//   err: {
-//     code:
-//     message:
-//   },
-// };
+const errWrongIdOrQuantity = {
+  err: {
+    code: CODE_ERROR_422,
+    message: MSG_ERROR_WRONG_ID_OR_QUANTITY,
+  },
+};
 
 module.exports = {
   errName,
@@ -59,6 +60,7 @@ module.exports = {
   errQuantity,
   errNotANumber,
   erroWrongIdFormat,
+  errWrongIdOrQuantity,
   STATUS_CODE_OK,
   STATUS_CODE_CREATED,
   STATUS_CODE_UNPROCESSABLE_ENTITY,
