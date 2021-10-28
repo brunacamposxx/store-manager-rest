@@ -23,8 +23,25 @@ const getSaleById = async (id) => {
   return sales;
 };
 
+const updateOne = async (id, sales) => {
+  const { quantity, itensSold } = sales;
+  if (quantity <= 0) return errWrongIdOrQuantity;
+  if (typeof quantity !== 'number') return errWrongIdOrQuantity;
+  const { _id, itensSold: sold } = await salesModels.update(id, sales);
+  itensSold.push(sold);
+  const updateSale = { _id, itensSold };
+  // console.log(updateSale);
+  return updateSale;
+};
+
+const excludeOne = async (id) => {
+  const deleteId = await salesModels.exclude(id);
+  return deleteId;
+};
 module.exports = {
   createSale,
   getSales,
   getSaleById,
+  updateOne,
+  excludeOne,
 };

@@ -29,8 +29,31 @@ const getSalesById = async (req, res) => {
   return res.status(STATUS_CODE_OK).json(sales);
 };
 
+const update = async (req, res) => {
+  const { id } = req.params;
+  const sales = req.body;
+
+  const newSale = await saleService.updateOne(id, sales);
+  if (newSale.err) {
+    return res.status(STATUS_CODE_UNPROCESSABLE_ENTITY).json(newSale);
+  }
+    return res.status(STATUS_CODE_OK).json(newSale);
+};
+
+const exclude = async (req, res) => {
+  const { id } = req.params;
+
+  const excludedProduct = await saleService.excludeOne(id);
+  if (excludedProduct.err) {
+    return res.status(STATUS_CODE_UNPROCESSABLE_ENTITY).json(excludedProduct);
+  }
+  res.status(STATUS_CODE_OK).json(excludedProduct);
+};
+
 module.exports = {
   createSale,
   getAllSales,
   getSalesById,
+  update,
+  exclude,
 };

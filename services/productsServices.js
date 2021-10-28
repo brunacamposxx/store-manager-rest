@@ -20,19 +20,11 @@ const create = async (product) => {
   if (quantity <= 0) return errQuantity;
 
   const duplicateName = await productsModels.getByName(name);
-  // const findName = duplicateName.find((productName) => productName.name === name);
   if (duplicateName) return errAlreadyExists;
   return productsModels.create(product);
 };
 
-// verifica se o nome é duplicado
-// const validName = async ({ name }) => {
-//   const product = await productsModels.getAll();
-//   const findName = product.find((product) => product.name === name);
-// };
-
 const getId = async (id) => {
-  // const { id } = product;
   if (!ObjectId.isValid(id)) {
     return erroWrongIdFormat;
   }
@@ -42,23 +34,15 @@ const getId = async (id) => {
 
 const updateProduct = async (product) => {
   const { name, quantity } = product;
-
-  // if (!ObjectId.isValid(id)) {
-  //   return erroWrongIdFormat;
-  // }
   if (name.length < 5) return errName;
   if (typeof quantity !== 'number') return errNotANumber;
   if (quantity <= 0) return errQuantity;
 
-  const products = await productsModels.update(product);
-  return products;
+  const productsUpdated = await productsModels.update(product);
+  return productsUpdated;
 };
 
 const excludeProduct = async (id) => {
-  // if (!ObjectId.isValid(id)) {
-  //   return erroWrongIdFormat;
-  // }
-
   const excludeId = await productsModels.exclude(id);
   return excludeId;
 };

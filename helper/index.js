@@ -13,6 +13,7 @@ const MSG_ERROR_NOT_A_NUMBER = '"quantity" must be a number';
 const MSG_ERROR_WRONG_ID_FORMAT = 'Wrong id format';
 const MSG_ERROR_WRONG_ID_OR_QUANTITY = 'Wrong product ID or invalid quantity';
 const MSG_ERROR_NOT_FOUND = 'Sale not found';
+const MSG_ERROR_WRONG_ID_FORMAT_SALE = 'Wrong sale ID format';
 
 const errName = {
   err: {
@@ -63,6 +64,13 @@ const errNotFound = {
   },
 };
 
+const errWrongIdFormatSale = {
+  err: {
+    code: CODE_ERROR_422,
+    message: MSG_ERROR_WRONG_ID_FORMAT_SALE,
+  },
+};
+
 module.exports = {
   errName,
   errAlreadyExists,
@@ -71,9 +79,9 @@ module.exports = {
   erroWrongIdFormat,
   errWrongIdOrQuantity,
   errNotFound,
+  errWrongIdFormatSale,
   STATUS_CODE_OK,
   STATUS_CODE_CREATED,
   STATUS_CODE_UNPROCESSABLE_ENTITY,
   STATUS_CODE_NOT_FOUND,
-  
 };
