@@ -39,25 +39,18 @@ const getSaleById = async (id) => {
 };
 
 const updateOne = async (id, sales) => {
-  // const { quantity, itensSold } = sales;
-  const { quantity } = sales;
-
+  const { quantity } = sales[0];
+ 
   if (quantity <= 0 || typeof quantity !== 'number') {
-    return { err: {
-    code: CODE_ERROR_422,
-    message: MSG_ERROR_WRONG_ID_OR_QUANTITY,
-  } };
-  }
-  // if (typeof quantity !== 'number') return errWrongIdOrQuantity;
-
-  // const itensSold = [];
-  // const { _id, itensSold: sold } = await salesModels.update(id, sales);
-  // itensSold.push(sold);
-  // console.log(itensSold);
-  // const updateSale = { _id, itensSold };
-  // console.log(updateSale);
-
-  const xablau = await salesModels.update(id, sales);
+        return { err: {
+        code: CODE_ERROR_422,
+        message: MSG_ERROR_WRONG_ID_OR_QUANTITY,
+      } };
+      }
+  const itensSold = [];
+  const { _id, itensSold: sold } = await salesModels.update(id, sales);
+  itensSold.push(sold);
+  const xablau = { _id, itensSold };
   return xablau;
 };
 

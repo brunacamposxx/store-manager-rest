@@ -35,19 +35,14 @@ const getById = async (id) => {
 };
 
 const update = async (id, sale) => {
-  // const { productId, quantity } = sale;
-
-  // if (!ObjectId.isValid(id)) {
-  //   return errNotFound;
-  // }
+  const { productId, quantity } = sale[0];
   const db = await connection();
-  await db.collection('sales').updateOne({ _id: ObjectId(id) },
-    { $set: { itensSold: sale } });
-  // await db.collection('sales').findOne({ _id: ObjectId(id) });
-  // if (!updated) {
-  //   return errNotFound;
-  // }
-  return { _id: id, itensSold: sale };
+  await db.collection('sales').updateOne(
+    { _id: ObjectId(id) },
+    { $set: { itensSold: { productId, quantity } } },
+  );
+  const updated = await db.collection('sales').findOne({ _id: ObjectId(id) });
+  return updated;
 };
 
 const exclude = async (id) => {
