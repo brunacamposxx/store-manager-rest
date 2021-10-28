@@ -37,6 +37,7 @@ const update = async (req, res) => {
   if (newSale.err) {
     return res.status(STATUS_CODE_UNPROCESSABLE_ENTITY).json(newSale);
   }
+  // console.log(newSale);
     return res.status(STATUS_CODE_OK).json(newSale);
 };
 

@@ -24,11 +24,16 @@ const getSaleById = async (id) => {
 };
 
 const updateOne = async (id, sales) => {
-  const { quantity, itensSold } = sales;
+  // const { quantity, itensSold } = sales;
+  const { quantity } = sales;
+
   if (quantity <= 0) return errWrongIdOrQuantity;
   if (typeof quantity !== 'number') return errWrongIdOrQuantity;
+
+  const itensSold = [];
   const { _id, itensSold: sold } = await salesModels.update(id, sales);
   itensSold.push(sold);
+  console.log(itensSold);
   const updateSale = { _id, itensSold };
   // console.log(updateSale);
   return updateSale;

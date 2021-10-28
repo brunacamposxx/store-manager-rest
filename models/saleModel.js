@@ -27,7 +27,7 @@ const getById = async (id) => {
 };
 
 const update = async (id, sale) => {
-  const { productId, quantity } = sale[0];
+  const { productId, quantity } = sale;
   if (!ObjectId.isValid(id)) {
     return errNotFound;
   }
@@ -35,9 +35,9 @@ const update = async (id, sale) => {
   await db.collection('sales').updateOne({ _id: ObjectId(id) },
     { $set: { itensSold: { productId, quantity } } });
   const updated = await db.collection('sales').findOne({ _id: ObjectId(id) });
-  if (!updated) {
-    return errNotFound;
-  }
+  // if (!updated) {
+  //   return errNotFound;
+  // }
   return updated;
 };
 
