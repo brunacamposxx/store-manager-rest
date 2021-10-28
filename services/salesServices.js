@@ -1,9 +1,8 @@
-// const { ObjectId } = require('mongodb');
 const salesModels = require('../models/saleModel');
 const productsModel = require('../models/productModel');
 const {
   errWrongIdOrQuantity,
-  // erroWrongIdFormat,
+  errNotFound,
 } = require('../helper/index');
 
 const createSale = async (sale) => {
@@ -16,19 +15,12 @@ const createSale = async (sale) => {
   return salesModels.create(sale);
 };
 
-const getSales = async () => {
-  const sales = await productsModel.getAll();
-  return sales;
-};
+const getSales = async () => salesModels.getAll();
 
 const getSaleById = async (id) => {
-  // if (!ObjectId.isValid(id)) {
-  //   return errWrongIdOrQuantity;
-  // }
-  
-  const sale = await salesModels.getById(id);
-  if (!sale) return errWrongIdOrQuantity;
-  return sale;
+  const sales = await salesModels.getById(id);
+  if (!sales) return errNotFound;
+  return sales;
 };
 
 module.exports = {

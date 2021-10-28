@@ -1,5 +1,5 @@
 const { MongoClient } = require('mongodb');
-// alteração para subir novamente pro github
+
 // const MONGO_DB_URL = 'mongodb://localhost:27017/StoreManager';
 // Para o avaliador funcionar altere a conexão do banco para:
 const MONGO_DB_URL = 'mongodb://mongodb:27017/StoreManager';
