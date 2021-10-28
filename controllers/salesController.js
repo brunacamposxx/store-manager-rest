@@ -8,12 +8,25 @@ const { STATUS_CODE_UNPROCESSABLE_ENTITY,
 // };
 
 const createSale = async (req, res) => {
+  // const sale = req.body;
+  // const sales = await saleService.createSale(sale);
   const sales = await saleService.createSale(req.body);
   if (sales.err) {
     return res.status(STATUS_CODE_UNPROCESSABLE_ENTITY).json(sales);
   }
   return res.status(STATUS_CODE_OK).json(sales);
 };
+
+// const createSale = async (req, res) => {
+//   const sales = await saleService.createSale(req.body);
+//   // console.log(sales);
+//   // console.log(sales.err);
+//   if (sales.err[0]) {
+//     console.log('ENTREI AQUI!!!!!!!!!!!!!!!!!!!!!!!!');
+//     return res.status(STATUS_CODE_UNPROCESSABLE_ENTITY).json(sales);
+//   }
+//   return res.status(STATUS_CODE_OK).json(sales);
+// };
 
 const getAllSales = async (_req, res) => {
   const sales = await saleService.getSales();
@@ -34,6 +47,7 @@ const update = async (req, res) => {
   const sales = req.body;
 
   const newSale = await saleService.updateOne(id, sales);
+
   if (newSale.err) {
     return res.status(STATUS_CODE_UNPROCESSABLE_ENTITY).json(newSale);
   }
