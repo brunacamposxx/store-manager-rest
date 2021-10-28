@@ -2,10 +2,10 @@ const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 const { erroWrongIdFormat } = require('../helper/index');
 
-const getAll = async () => {
+const create = async (product) => {
   const db = await connection();
-  const products = await db.collection('products').find({}).toArray();
-  return { products };
+  const inserted = await db.collection('products').insertOne(product);
+  return inserted.ops[0];
 };
 
 const getById = async (id) => {
@@ -13,10 +13,10 @@ const getById = async (id) => {
   return db.collection('products').findOne(ObjectId(id));
 };
 
-const create = async (product) => {
+const getAll = async () => {
   const db = await connection();
-  const inserted = await db.collection('products').insertOne(product);
-  return inserted.ops[0];
+  const products = await db.collection('products').find({}).toArray();
+  return { products };
 };
 
 const getByName = async (name) => {

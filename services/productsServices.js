@@ -7,7 +7,7 @@ const { errName,
   erroWrongIdFormat,
 } = require('../helper/index');
 
-const getProducts = async () => {
+const getAll = async () => {
   const products = await productsModels.getAll();
   return products;
 };
@@ -24,7 +24,7 @@ const create = async (product) => {
   return productsModels.create(product);
 };
 
-const getId = async (id) => {
+const getById = async (id) => {
   if (!ObjectId.isValid(id)) {
     return erroWrongIdFormat;
   }
@@ -32,7 +32,7 @@ const getId = async (id) => {
   return products;  
 };
 
-const updateProduct = async (product) => {
+const update = async (product) => {
   const { name, quantity } = product;
   if (name.length < 5) return errName;
   if (typeof quantity !== 'number') return errNotANumber;
@@ -42,15 +42,15 @@ const updateProduct = async (product) => {
   return productsUpdated;
 };
 
-const excludeProduct = async (id) => {
+const exclude = async (id) => {
   const excludeId = await productsModels.exclude(id);
   return excludeId;
 };
 
 module.exports = {
-  getProducts,
+  getAll,
   create,
-  getId,
-  updateProduct,
-  excludeProduct,
+  getById,
+  update,
+  exclude,
 };

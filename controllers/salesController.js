@@ -3,39 +3,22 @@ const { STATUS_CODE_UNPROCESSABLE_ENTITY,
   STATUS_CODE_OK,
   STATUS_CODE_NOT_FOUND } = require('../helper/index');
 
-// const getAllSales = (req, res) => {
-//   res.status(200).json({ message: 'Estou na rota getAllSales' });
-// };
-
-const createSale = async (req, res) => {
-  // const sale = req.body;
-  // const sales = await saleService.createSale(sale);
-  const sales = await saleService.createSale(req.body);
+const create = async (req, res) => {
+  const sales = await saleService.create(req.body);
   if (sales.err) {
     return res.status(STATUS_CODE_UNPROCESSABLE_ENTITY).json(sales);
   }
   return res.status(STATUS_CODE_OK).json(sales);
 };
 
-// const createSale = async (req, res) => {
-//   const sales = await saleService.createSale(req.body);
-//   // console.log(sales);
-//   // console.log(sales.err);
-//   if (sales.err[0]) {
-//     console.log('ENTREI AQUI!!!!!!!!!!!!!!!!!!!!!!!!');
-//     return res.status(STATUS_CODE_UNPROCESSABLE_ENTITY).json(sales);
-//   }
-//   return res.status(STATUS_CODE_OK).json(sales);
-// };
-
-const getAllSales = async (_req, res) => {
-  const sales = await saleService.getSales();
+const getAll = async (_req, res) => {
+  const sales = await saleService.getAll();
   return res.status(STATUS_CODE_OK).json(sales);
 };
 
-const getSalesById = async (req, res) => {
+const getById = async (req, res) => {
   const { id } = req.params;
-  const sales = await saleService.getSaleById(id);
+  const sales = await saleService.getById(id);
   if (sales.err) { 
     return res.status(STATUS_CODE_NOT_FOUND).json(sales);
   }
@@ -45,20 +28,18 @@ const getSalesById = async (req, res) => {
 const update = async (req, res) => {
   const { id } = req.params;
   const sales = req.body;
-
-  const newSale = await saleService.updateOne(id, sales);
-
-  if (newSale.err) {
-    return res.status(STATUS_CODE_UNPROCESSABLE_ENTITY).json(newSale);
+  
+  const sale = await saleService.update(id, sales);
+  if (sale.err) {
+    return res.status(STATUS_CODE_UNPROCESSABLE_ENTITY).json(sale);
   }
-  // console.log(newSale);
-    return res.status(STATUS_CODE_OK).json(newSale);
+  return res.status(STATUS_CODE_OK).json(sale);
 };
 
 const exclude = async (req, res) => {
   const { id } = req.params;
 
-  const excludedProduct = await saleService.excludeOne(id);
+  const excludedProduct = await saleService.exclude(id);
   if (excludedProduct.err) {
     return res.status(STATUS_CODE_UNPROCESSABLE_ENTITY).json(excludedProduct);
   }
@@ -66,9 +47,9 @@ const exclude = async (req, res) => {
 };
 
 module.exports = {
-  createSale,
-  getAllSales,
-  getSalesById,
+  create,
+  getAll,
+  getById,
   update,
   exclude,
 };

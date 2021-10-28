@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const productsRouter = require('./routes/productsRoutes');
 const salesRoutes = require('./routes/salesRoutes');
-// const routes = require('./routes/index');
 
 const app = express();
 app.use(bodyParser.json());
@@ -16,10 +15,8 @@ app.get('/', (_request, response) => {
 });
 // ------------------------------- //
 
-// app.use([productsRouter, salesRoutes]);
 app.use(productsRouter);
 app.use(salesRoutes);
-// app.use(routes);
 
 app.listen(PORT, () => {
   console.log('Listening on port', PORT);

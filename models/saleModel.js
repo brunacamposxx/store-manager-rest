@@ -11,15 +11,6 @@ const create = async (sales) => {
   return sale.ops[0];
 };
 
-// const create = async (sales) => {
-//   const db = await connection();
-//   const sale = await db.collection('sales').insertOne({ itensSold: sales });
-//     // .then((res) => ({ _id: res.insertedId, itensSold: res }));
-//   // console.log(sale.ops[0]);
-//   // return sale.ops[0];
-//   return { _id: sale.insertedId, itensSold: sales };
-// };
-
 const getAll = async () => {
   const db = await connection();
   const sales = await db.collection('sales').find({}).toArray();
@@ -56,8 +47,6 @@ const exclude = async (id) => {
 
   const db = await connection();
   await db.collection('sales').deleteOne({ _id: ObjectId(id) });
-  // const excluded = await db.collection('sales').findOne({ _id: ObjectId(id) });
-  // return { deleteId, excluded };
   return deleteId;
 };
 
